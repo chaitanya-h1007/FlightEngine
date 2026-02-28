@@ -1,0 +1,80 @@
+﻿@model FlightSearchEngine.Models.SearchViewModel
+
+@{
+    ViewData["Title"] = "Flight Search";
+}
+
+<h2>Flight Search Engine</h2>
+
+<form asp-action="SearchFlights" method="post" id="searchForm">
+
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="All" style="color:red"></div>
+
+    <div>
+        <label>Source:</label>
+        <select asp-for="Source" asp-items="Model.SourceList" id="sourceDropdown">
+            <option value="">-- Select Source --</option>
+        </select>
+        <span asp-validation-for="Source" style="color:red"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label>Destination:</label>
+        <select asp-for="Destination" asp-items="Model.DestinationList" id="destinationDropdown">
+            <option value="">-- Select Destination --</option>
+        </select>
+        <span asp-validation-for="Destination" style="color:red"></span>
+    </div>
+
+    <br />
+
+    <div>
+        <label>Number of Persons:</label>
+        <input asp-for="NumberOfPersons" type="number" min="1" max="10" />
+        <span asp-validation-for="NumberOfPersons" style="color:red"></span>
+    </div>
+
+    <br />
+
+    <button type="submit"
+            formaction="@Url.Action("SearchFlights", "Flight")"
+            id="flightBtn">
+        Search Flights Only
+    </button>
+
+    <button type="submit"
+            formaction="@Url.Action("SearchFlightsWithHotels", "Flight")"
+            id="packageBtn">
+        Search Flight + Hotel
+    </button>
+
+</form>
+
+<br />
+<div id="loading" style="display:none;">Searching... Please wait...</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        // Prevent same source & destination
+        document.getElementById("searchForm").addEventListener("submit", function (e) {
+
+            var source = document.getElementById("sourceDropdown").value;
+            var destination = document.getElementById("destinationDropdown").value;
+
+            if (source === destination && source !== "") {
+                alert("Source and Destination cannot be same.");
+                e.preventDefault();
+                return;
+            }
+
+            // Show loading spinner
+            document.getElementById("loading").style.display = "block";
+        });
+    </script>
+}
