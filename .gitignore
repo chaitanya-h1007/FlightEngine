@@ -6,7 +6,19 @@
 ## has more thorough IDE-specific entries.
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/Dotnet.gitignore
+# Visual Studio
+.vs/
 
+# Build folders
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+
+# Logs
+*.log
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
