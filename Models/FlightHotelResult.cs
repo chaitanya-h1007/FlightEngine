@@ -7,6 +7,6 @@
         public string Source { get; set; }
         public string Destination { get; set; }
         public string HotelName { get; set; }
-        public int TotalCost { get; set; }
+        public decimal TotalCost { get; set; }
     }
 }
